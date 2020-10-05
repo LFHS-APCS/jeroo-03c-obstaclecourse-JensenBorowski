@@ -3,7 +3,10 @@
  * @author Steve Aronson
  */
 public class Jeroo extends JerooBase {
-
+  public void turnAround() {
+    turn(LEFT);
+    turn(LEFT);
+  }
     /** 
      * 
      * A very peculiar obstacle course is laid out.
@@ -21,15 +24,24 @@ public class Jeroo extends JerooBase {
      *    or west end of the island (without picking flowers).
      */
     public void runCourse() {
-      while (!isFlower(HERE)) {
+      while (isFacing(NORTH)) {
         hop();
         if (isNet(AHEAD)) {
           toss();
         } else if (isFlower(HERE)) {
-          pick();
+          if (isWater(AHEAD)) {
+            turn(LEFT);
+          } else if (isNet(AHEAD)) {
+            turn(RIGHT);
+          } else if (!isWater(AHEAD)) {
+            pick();
+          }
         }
-      }
-    }
+        }
+        while (!isWater(AHEAD)) {
+          hop();
+        }
+        }
 
     
     
